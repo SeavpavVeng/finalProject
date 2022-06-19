@@ -1,39 +1,115 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports_shopping_app/screens/login_screen.dart';
-import 'package:sports_shopping_app/widgets/signup_to_login.dart';
+import 'package:sports_shopping_app/screens/main_screens.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+import '../data/api/api.dart';
+import '../widgets/big_text.dart';
+import '../widgets/signup_to_login.dart';
 
-  @override
-  State<SignupScreen> createState() => _SignupScreenState();
+enum MobileVerificationState {
+  SHOW_MOBILE_FORM_STATE,
+  SHOW_OTP_FORM_STATE,
 }
 
-final _formkey = GlobalKey<FormState>();
-String p =
-    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-RegExp regExp = RegExp(p);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
-final userNameEditingController = TextEditingController();
-final TextEditingController locationController = TextEditingController();
-final TextEditingController phonenumberController = TextEditingController();
-final passwordEditingController = TextEditingController();
-
-class _SignupScreenState extends State<SignupScreen> {
   @override
-  Widget build(BuildContext context) {
-    final userNameField = TextFormField(
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  MobileVerificationState currentState =
+      MobileVerificationState.SHOW_MOBILE_FORM_STATE;
+
+  final usernameController = TextEditingController();
+  //var locationController = TextEditingController();
+  final phonenumberController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
+  final otpController = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+
+  late String verificationId;
+  bool showLoading = false;
+
+  var phonemask = MaskTextInputFormatter(
+      mask: '+855##-###-####',
+      filter: {"#": RegExp(r'[+,0-9]')},
+      type: MaskAutoCompletionType.lazy);
+
+  void signInWithPhoneAuthCredential(
+      PhoneAuthCredential phoneAuthCredential) async {
+    setState(() {
+      showLoading = true;
+    });
+    try {
+      final authCredential =
+          await auth.signInWithCredential(phoneAuthCredential);
+      setState(() {
+        showLoading = false;
+      });
+
+      if (authCredential.user != null) {
+        var data = {
+          'username': usernameController.text,
+          // 'location': locationController.text,
+          'phone_number': phonenumberController.text,
+          'password': passwordController.text,
+          'password_confirmation': passwordConfirmController.text,
+        };
+
+        var res = await CallApi().postData(data, 'register');
+        var body = json.decode(res.body);
+        if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          print("success");
+          // localStorage.setString('token', body['token'].toString());
+          // localStorage.setString('users', json.encode(body['users']));
+          print(body['user']);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MainScreen()));
+        } else {
+          print(" not success");
+        }
+
+        setState(() {
+          showLoading = false;
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        showLoading = false;
+      });
+
+      // _scaffoldKey.currentState
+      // .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
+  getMobileFromWidget(context) {
+    var userNameField = TextFormField(
       autofocus: false,
-      controller: userNameEditingController,
+      controller: usernameController,
       keyboardType: TextInputType.name,
       validator: (value) {
         if (value!.isEmpty) {
-          return ("Username cannot be Empty");
+          return ("Username cannot empty!");
+        } else {
+          return null;
         }
-        return null;
       },
       onSaved: (value) {
-        userNameEditingController.text = value!;
+        usernameController.text = value!;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -41,48 +117,25 @@ class _SignupScreenState extends State<SignupScreen> {
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Username",
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
     );
 
-    final locationField = TextFormField(
-      autofocus: false,
-      controller: locationController,
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        // if (value!.isEmpty) {
-        //   return ("Please Fill Your Email");
-        // }
-        // // reg expression for email validation
-        // if (!regExp.hasMatch(value)) {
-        //   return ("Please Fill a valid email");
-        // }
-        // return null;
-      },
-      onSaved: (value) {
-        locationController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.location_on),
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Location",
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
-    final phonenumberField = TextFormField(
+    var phonenumberField = TextFormField(
+        inputFormatters: [phonemask],
         autofocus: false,
         controller: phonenumberController,
         validator: (value) {
-          RegExp regex = RegExp(r'^.{6,}$');
+          RegExp regex = RegExp(r'^.[+]*[(]{0}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$');
           if (value!.isEmpty) {
-            return ("Password is required for login");
-          }
-          if (!regex.hasMatch(value)) {
-            return ("Enter Valid Password(Min. 6 Character)");
+            return ("Phone Number cannot empty!");
+          } else if (!regex.hasMatch(value)) {
+            return ("Please correct phone number!");
+          } else if (value.length < 9 && value.length > 10) {
+            return ("Phone number must be between 9 and 10 number");
+          } else {
+            return null;
           }
         },
         onSaved: (value) {
@@ -94,24 +147,25 @@ class _SignupScreenState extends State<SignupScreen> {
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Phone Number",
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(30),
           ),
         ));
-    final passwordField = TextFormField(
+
+    var passwordField = TextFormField(
         autofocus: false,
-        controller: passwordEditingController,
+        controller: passwordController,
         obscureText: true,
         validator: (value) {
           RegExp regex = RegExp(r'^.{6,}$');
           if (value!.isEmpty) {
-            return ("Password is required for login");
+            return ("Password cannot empty!");
           }
           if (!regex.hasMatch(value)) {
-            return ("Enter Valid Password(Min. 6 Character)");
+            return ("Please Enter Valid Password(Min. 6 Character)");
           }
         },
         onSaved: (value) {
-          userNameEditingController.text = value!;
+          passwordController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -119,83 +173,148 @@ class _SignupScreenState extends State<SignupScreen> {
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(30),
           ),
         ));
+    var confirmpasswordField = TextFormField(
+        autofocus: false,
+        controller: passwordConfirmController,
+        obscureText: true,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Password cannot empty!");
+          } else if (value != passwordController.text) {
+            return ("Password is not match!");
+          } else {
+            return null;
+          }
+        },
+        onSaved: (value) {
+          passwordController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.vpn_key),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Confirm Password",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ));
+    _registration() async {
+      setState(() {
+        showLoading = true;
+      });
+      var data = {
+          'username': usernameController.text,
+          // 'location': locationController.text,
+          'phone_number': phonenumberController.text,
+          'password': passwordController.text,
+          'password_confirmation': passwordConfirmController.text,
+        };
 
-    final signUpButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blueAccent,
-      child: MaterialButton(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {
-            //signUp(emailEditingController.text, passwordEditingController.text);
-          },
-          child: const Text(
-            "SignUp",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          )),
-    );
-    return Scaffold(
-      body: Stack(children: <Widget>[
-        
-        Positioned(
-          child: ClipPath(
-            clipper: HeaderClipper(),
-            child: Container(
-             
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                colors: [Color(0xff03a9f4), Color(0xff004ba0)],
-                begin: Alignment.centerRight,
-                end: Alignment(-1.0, -1.0),
-              )),
-            ),
+        var res = await CallApi().postData(data, 'register');
+        var body = json.decode(res.body);
+        if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
+          SharedPreferences localStorage =
+              await SharedPreferences.getInstance();
+          localStorage.setString('access_token', body['access_token'].toString());
+          localStorage.setString('user', json.encode(body['user']));
+          print(body['user']);
+         
+        } else {
+          print(" not success");
+        }
+
+        setState(() {
+          showLoading = false;
+        });
+      
+
+      await auth.verifyPhoneNumber(
+        phoneNumber: phonenumberController.text,
+        verificationCompleted: (phoneAuthCredential) async {
+          setState(() {
+            showLoading = false;
+          });
+        },
+        verificationFailed: (verificationFailed) async {
+          setState(() {
+            showLoading = false;
+          });
+          // _scaffoldKey.currentState.showSnackBar(
+          //     SnackBar(content: Text(verificationFailed.message)));
+        },
+        codeSent: (verificationId, resendingToken) async {
+          setState(() {
+            showLoading = false;
+            currentState = MobileVerificationState.SHOW_OTP_FORM_STATE;
+            this.verificationId = verificationId;
+          });
+        },
+        codeAutoRetrievalTimeout: (verificationId) async {},
+      );
+
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => OTPScreen(
+      //               number: phonenumberController,
+      //             )));
+    }
+
+    return Stack(children: <Widget>[
+      Positioned(
+        child: ClipPath(
+          clipper: HeaderClipper(),
+          child: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              colors: [Color(0xff03a9f4), Color(0xff004ba0)],
+              begin: Alignment.centerRight,
+              end: Alignment(-1.0, -1.0),
+            )),
           ),
         ),
-         Center(
-            heightFactor: 4,
-            child: Container(
-              height: 60,
-              width: 300,
-              decoration: BoxDecoration(
-                      //shape: BoxShape.circle,
-                      // color: Colors.white,
-                      image: DecorationImage(
-                    image: AssetImage("asset/images/logo.png"),
-                    fit: BoxFit.cover,
-                  )),
-            ),
-            //child: Text("Phteas Keila", style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
-          
-          ),
-        Positioned(
-            child: Center(
+      ),
+      Center(
+        heightFactor: 4,
+        child: Container(
+          height: 60,
+          width: 300,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("asset/images/logo.png"),
+            fit: BoxFit.cover,
+          )),
+        ),
+      ),
+      Positioned(
+        child: Center(
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Form(
-                key: _formkey,
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 250.0,
                     ),
                     userNameField,
                     const SizedBox(
                       height: 20.0,
                     ),
-                    locationField,
-                    const SizedBox(
-                      height: 20.0,
-                    ),
+                    // locationField,
+                    // const SizedBox(
+                    //   height: 20.0,
+                    // ),
+
                     phonenumberField,
+
                     const SizedBox(
                       height: 20.0,
                     ),
@@ -203,7 +322,33 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(
                       height: 20.0,
                     ),
-                    signUpButton,
+                    confirmpasswordField,
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        
+                          _registration();
+                       
+                      },
+                      child: Container(
+                        width: 350,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.blueAccent,
+                        ),
+                        child: Center(
+                          child: BigText(
+                            text: "Register",
+                            size: 24,
+                            color: Colors.white,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 15.0,
                     ),
@@ -223,9 +368,167 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
-        ))
-      ]),
+        ),
+      )
+    ]);
+  }
+
+  getOtpFromWidget(context) {
+    final Size size = MediaQuery.of(context).size;
+    final submitButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.blueAccent,
+      child: MaterialButton(
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          minWidth: size.width / 3,
+          onPressed: () {
+            PhoneAuthCredential phoneAuthCredential =
+                PhoneAuthProvider.credential(
+                    verificationId: verificationId,
+                    smsCode: otpController.text);
+            signInWithPhoneAuthCredential(phoneAuthCredential);
+            //   Navigator.push(
+            //       context, MaterialPageRoute(builder: (ctx) => MainScreen()));
+          },
+          child: const Text(
+            "Verify",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+          )),
     );
+    return Container(
+      color: Colors.blueAccent,
+      child: SafeArea(
+          child: Scaffold(
+        body: SizedBox(
+          height: size.height,
+          width: size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    height: size.height / 7,
+                    width: size.width / 3,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xff03a9f4), Color(0xff004ba0)],
+                        begin: Alignment.centerRight,
+                        end: Alignment(-1.0, -1.0),
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(1000),
+                      ),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: size.width / 12,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: size.height / 22,
+                ),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: "Verify your\n Phone Number\n",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: size.width / 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      TextSpan(
+                        text:
+                            "Enter the OTP that you have\n recieved through SMS",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: size.width / 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: size.height / 15),
+                SizedBox(
+                  // height: size.height / 18,
+                  height: size.height / 5,
+                  width: size.width / 1.2,
+                  // child: getOtpFormWidget(context),
+                  child: PinCodeTextField(
+                    appContext: context,
+                    controller: otpController,
+                    length: 6,
+                    onChanged: (val) {
+                      print(val);
+                    },
+                    onCompleted: (val) {
+                      print("Completed");
+                    },
+                    pinTheme: PinTheme(
+                        activeColor: Colors.blueAccent,
+                        inactiveColor: Colors.blueAccent,
+                        selectedColor: Colors.red,
+                        shape: PinCodeFieldShape.circle,
+                        fieldHeight: size.height / 18,
+                        fieldWidth: size.width / 8),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                SizedBox(
+                  height: size.height / 10,
+                ),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: const TextSpan(
+                      text: "Didn't receive the code? ",
+                      style: TextStyle(color: Colors.black54, fontSize: 15),
+                      children: [
+                        TextSpan(
+                            text: " RESEND",
+                            //recognizer: ,
+                            style: TextStyle(
+                                color: Color(0xFF91D3B3),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16))
+                      ]),
+                ),
+                SizedBox(height: size.height / 15),
+                submitButton,
+              ],
+            ),
+          ),
+        ),
+      )),
+    );
+  }
+
+ // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+       // key: _scaffoldKey,
+        body: passwordConfirmController == showLoading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
+                  ? getMobileFromWidget(context)
+                  : getOtpFromWidget(context),
+          
+        );
   }
 }
 

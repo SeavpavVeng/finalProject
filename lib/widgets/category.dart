@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sports_shopping_app/controllers/product_controller.dart';
 import 'package:sports_shopping_app/data/data.dart';
 import 'package:sports_shopping_app/models/single_product.dart';
 import 'package:sports_shopping_app/route/routepage.dart';
@@ -10,11 +12,12 @@ import 'package:sports_shopping_app/widgets/category_card.dart';
 
 class Category extends StatelessWidget {
   // final List<CategoryProduct> cardData;
-  
+
   // Category({required this.cardData});
 
   @override
   Widget build(BuildContext context) {
+    Get.find<ProductController>().getProductList();
     return Container(
       height: 80,
       child: ListView.builder(
@@ -24,62 +27,58 @@ class Category extends StatelessWidget {
             var data = category_products[index];
             return CategoryCard(
                 onPressed: () {
-                  if(index == 0 ){
-                     PageRouting.goToNextPage(
-                    context: context,
-                    navigateTo: ListProduct(
-                       productData: Tshirt_products, 
-                       image: Tshirt_products[index].images, 
-                       name: Tshirt_products[index].names, 
-                       price: Tshirt_products[index].prices,
-                    ),
-                  );
-                  }
-                  else if(index ==1){
+                  if (index == 0) {
                     PageRouting.goToNextPage(
                       context: context,
                       navigateTo: ListProduct(
-                        productData: ballproducts, 
-                        image: ballproducts[index].images, 
-                        name: ballproducts[index].names, 
+                        productData: Tshirt_products,
+                        image: Tshirt_products[index].images,
+                        name: Tshirt_products[index].names,
+                        price: Tshirt_products[index].prices,
+                      ),
+                    );
+                  } else if (index == 1) {
+                    PageRouting.goToNextPage(
+                      context: context,
+                      navigateTo: ListProduct(
+                        productData: ballproducts,
+                        image: ballproducts[index].images,
+                        name: ballproducts[index].names,
                         price: ballproducts[index].prices,
                       ),
                     );
-                  }
-                  else if(index == 2){
+                  } else if (index == 2) {
                     PageRouting.goToNextPage(
                       context: context,
                       navigateTo: ListProduct(
-                        productData: bootsproducts, 
-                        image: bootsproducts[index].images, 
-                        name: bootsproducts[index].names, 
+                        productData: bootsproducts,
+                        image: bootsproducts[index].images,
+                        name: bootsproducts[index].names,
                         price: bootsproducts[index].prices,
                       ),
                     );
-                  }
-                  else if(index ==3){
+                  } else if (index == 3) {
                     PageRouting.goToNextPage(
                       context: context,
                       navigateTo: ListProduct(
-                        productData: glovesproducts, 
-                        image: glovesproducts[index].images, 
-                        name: glovesproducts[index].names, 
+                        productData: glovesproducts,
+                        image: glovesproducts[index].images,
+                        name: glovesproducts[index].names,
                         price: glovesproducts[index].prices,
                       ),
                     );
-                  }
-                  else if(index ==4){
+                  } else if (index == 4) {
                     PageRouting.goToNextPage(
                       context: context,
                       navigateTo: ListProduct(
-                        productData: socksproducts, 
-                        image: socksproducts[index].images, 
-                        name: socksproducts[index].names, 
+                        productData: socksproducts,
+                        image: socksproducts[index].images,
+                        name: socksproducts[index].names,
                         price: socksproducts[index].prices,
                       ),
                     );
                   }
-                 
+
                   // Navigator.pushReplacement(context,
                   //     MaterialPageRoute(builder: (context) => ListProduct()));
                 },

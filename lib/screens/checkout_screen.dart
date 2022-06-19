@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:sports_shopping_app/widgets/build_amount_detail.dart';
 import 'package:sports_shopping_app/widgets/build_button_buy.dart';
+import 'package:sports_shopping_app/widgets/build_checkout.dart';
 import 'package:sports_shopping_app/widgets/build_single_cart.dart';
 
-class ShoppingCartScreen extends StatefulWidget {
-  const ShoppingCartScreen({Key? key}) : super(key: key);
+class CheckOutScreen extends StatefulWidget {
+  const CheckOutScreen({Key? key}) : super(key: key);
 
   @override
-  State<ShoppingCartScreen> createState() => _ShoppingCartScreenState();
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
 }
 
-class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
+class _CheckOutScreenState extends State<CheckOutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cart Item"),
+        title: Text("CheckOut Item"),
       ),
       body:Column(
         children: [
           Container(
-            height: 350,
+            height: 380,
             child: ListView(  
               children: [    
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      BuildSingleCart(),
-                      BuildSingleCart(),
-                      BuildSingleCart(),
-                      BuildSingleCart(),
+                      BuildCheckOut(),
+                      BuildCheckOut(),
+                      BuildCheckOut(),
+                      BuildCheckOut(),
                     ],
                   ),
                 ),
@@ -56,7 +57,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: BuildButtonBuy(name: 'Check Out',),
+            child: BuildButtonBuy(name: 'Place Order',),
           ),
       ]),
    );

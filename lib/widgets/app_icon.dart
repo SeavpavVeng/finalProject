@@ -5,6 +5,7 @@ class AppIcon extends StatelessWidget {
   final Color backgroundColor;
   final Color iconColor;
   final double size;
+  final double sizeIcon;
   final VoidCallback onPressed;
 
   AppIcon(
@@ -12,6 +13,7 @@ class AppIcon extends StatelessWidget {
       required this.backgroundColor,
       required this.iconColor,
       required this.size,
+      required this.sizeIcon,
       required this.onPressed});
 
   @override
@@ -28,7 +30,7 @@ class AppIcon extends StatelessWidget {
         child: Icon(
           icon,
           color: iconColor,
-          size: 20,
+          size: sizeIcon,
         ),
       ),
     );

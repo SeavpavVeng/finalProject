@@ -34,6 +34,13 @@ dependencies:
   pin_code_fields: ^7.4.0
   get: ^4.6.1
   convex_bottom_bar: ^3.0.0
+  shared_preferences: ^2.0.15
+  http: ^0.13.4
+  mask_text_input_formatter: ^2.3.0
+  firebase_auth: ^3.3.19
+  firebase_core: ^1.17.1
+  cloud_firestore: ^3.1.17
+  intl_phone_field: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -70,6 +77,7 @@ flutter:
      - asset/images/logo.png
      - asset/images/logo_2.png
      - asset/images/category/
+     - asset/images/success.gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

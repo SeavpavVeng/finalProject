@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sports_shopping_app/utils/app_constants.dart';
 
 class ApiClient extends GetConnect implements GetxService {
   late String token;
@@ -9,18 +10,46 @@ class ApiClient extends GetConnect implements GetxService {
   ApiClient({required this.appBaseUrl}) {
     baseUrl = appBaseUrl;
     timeout = Duration(seconds: 30);
+    token = AppConstants.TOKEN;
     _mainHeaders = {
+      // 'Content-type': 'application/json',
+      // 'Accept': 'application/json',
       'Content-type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token',
     };
   }
-  Future<Response> getData(
-    String url,
-  ) async {
+
+  void updateHeader(String token) {
+    _mainHeaders = {
+      //  'Content-type' : 'application/json',
+        // 'Accept' : 'application/json',
+      'Content-type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token',
+    };
+  }
+
+  Future<Response> getData(String uri) async {
     try {
-      Response response = await get(url);
+      print("get daata");
+      Response response = await get(uri);
       return response;
     } catch (e) {
+      print("can not get data");
+      return Response(statusCode: 1, statusText: e.toString());
+    }
+  }
+
+  Future<Response> postData(String uri, dynamic body) async {
+    print(body.toString());
+    print("step 1");
+    try {
+      Response response = await post(uri, body, headers: _mainHeaders);
+      print(response.toString());
+      print("Step 2");
+      return response;
+    } catch (e) {
+      print(e.toString());
+      print("losee");
       return Response(statusCode: 1, statusText: e.toString());
     }
   }

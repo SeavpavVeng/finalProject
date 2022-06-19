@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "806323093030",
+    "project_id": "otpverify-5098e",
+    "storage_bucket": "otpverify-5098e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806323093030:android:08f16081bb7bad8fd3f0e7",
+        "android_client_info": {
+          "package_name": "com.example.sports_shopping_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806323093030-6uqt6v9ud7sispuasie19lt1ntvr0aqf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sports_shopping_app",
+            "certificate_hash": "eaf0b84b04944c8a1cbdf56654c080be05e1e082"
+          }
+        },
+        {
+          "client_id": "806323093030-4fns52dho3n2et92c3lu0r8c8hguct73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWvxm7PyqXlC4pUy8LbcweaaoQQV50jCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806323093030-4fns52dho3n2et92c3lu0r8c8hguct73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

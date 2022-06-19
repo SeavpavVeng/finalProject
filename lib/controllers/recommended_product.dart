@@ -15,11 +15,8 @@ class RecommendedProductController extends GetxController {
         await recommendedProductRepo.getRecommendedProductList();
     if (response.statusCode == 200) {
       _recommendedProductList = [];
-     // _recommendedProductList.addAll();
+      // _recommendedProductList.addAll();
       update();
-    }
-    else {
-
-    }
+    } else {}
   }
 }

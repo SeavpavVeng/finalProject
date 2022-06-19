@@ -15,12 +15,17 @@ class BuildAmountDetail extends StatelessWidget {
           startName,
           style: const TextStyle(
             fontSize: 20,
+            color: Colors.blueAccent,
+            fontWeight: FontWeight.bold,
+
           ),
         ),
         Text(
           endName,
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 24,
+            color: Colors.blueAccent,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ],

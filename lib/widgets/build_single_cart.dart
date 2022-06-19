@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sports_shopping_app/widgets/build_qty_button.dart';
+import 'package:sports_shopping_app/widgets/drop_button_widget.dart';
 
-class BuildSingleCart extends StatelessWidget {
-  const BuildSingleCart({ Key? key }) : super(key: key);
+class BuildSingleCart extends StatefulWidget {
+  BuildSingleCart({Key? key}) : super(key: key);
+
+
+  @override
+  State<BuildSingleCart> createState() => _BuildSingleCartState();
+}
+
+class _BuildSingleCartState extends State<BuildSingleCart> {
+  
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +24,8 @@ class BuildSingleCart extends StatelessWidget {
             children: [
               Container(
                 height: 130,
-                width: 145,
-                decoration: BoxDecoration(
+                width: 135,
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                   fit: BoxFit.fill,
                   image: AssetImage("asset/images/category/T_shirts.png"),
@@ -23,7 +33,7 @@ class BuildSingleCart extends StatelessWidget {
               ),
               Container(
                 height: 120,
-                width: 180,
+                width: 250,
                 child: ListTile(
                   title: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -32,74 +42,94 @@ class BuildSingleCart extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                           top: 4.0,
-                          left: 8,
                           bottom: 2.0,
                         ),
-                        child: Text(
-                          "FC Barcelona",
-                          style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.orange,
-                              fontWeight: FontWeight.bold),
+                        child: Row(
+                          children: [
+                            Container(
+                              child: const Text(
+                                "FC Barcelona",
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Spacer(),
+                            Container(
+                              child: IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    size: 30,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () {}),
+                            )
+                          ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            bottom: 4.0, left: 8.0, top: 2.0),
+                          bottom: 4.0,
+                        ),
                         child: Row(
                           children: [
                             Text(
                               "Size : ",
                               style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                                  TextStyle(fontSize: 20, color: Colors.black),
                             ),
+                         
                             Text("M",style:
-                                  TextStyle(fontSize: 16, color: Colors.blueAccent), )
+                                  TextStyle(fontSize: 20, color: Colors.blueAccent), )
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 4.0, left: 8.0, top: 2.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Qty : ",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 4.0,
                             ),
-                            Text("1",style:
-                                  TextStyle(fontSize: 16, color: Colors.blueAccent), )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                          top: 4.0,
-                        ),
-                        child: Text(
-                          "\$${120}",
-                          style: const TextStyle(
-                              fontSize: 26,
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.bold),
-                        ),
+                            child: Text(
+                              "\$${120}",
+                              style: TextStyle(
+                                  fontSize: 26,
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Spacer(),
+                          Row(
+                            children: [
+                              BuildQTYButton(
+                                  icon: Icons.remove,
+                                  iconColor: Colors.white,
+                                  onPressed: () {}),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
+                                child: Text(
+                                  "01",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              BuildQTYButton(
+                                icon: Icons.add,
+                                iconColor: Colors.white,
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
                       )
                     ],
                   ),
                 ),
               ),
-              Container(
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    size: 30,
-                    color: Colors.blueAccent,
-                  ),
-                 onPressed: (){}
-                ),
-              )
             ],
           ),
         ]),
