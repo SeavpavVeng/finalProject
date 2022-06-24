@@ -1,12 +1,18 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sports_shopping_app/colors/colors.dart';
 import 'package:sports_shopping_app/data/data.dart';
 import 'package:sports_shopping_app/screens/favorite_screen.dart';
+import 'package:sports_shopping_app/screens/list_product.dart';
 import 'package:sports_shopping_app/screens/shopping_cart_screen.dart';
 import 'package:sports_shopping_app/widgets/category.dart';
 import 'package:sports_shopping_app/widgets/recommendation_product.dart';
 import 'package:sports_shopping_app/widgets/silder.dart';
+
+import '../controllers/product_controller.dart';
+import '../route/routepage.dart';
+import '../widgets/category_card.dart';
 
 class HomeScreen extends StatefulWidget {
  
@@ -18,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //Get.find<ProductController>().getProductList();
     return Scaffold(
     
       body: SingleChildScrollView(
@@ -67,10 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SliderContainer(),
             ),
             Container(
-              child: Category(
-                 
-              ),
+              child: Category(),
             ),
+       
+            
             Container(
               child: Padding(
                 padding: const EdgeInsets.only(left: 8.0, top: 8.0, ),

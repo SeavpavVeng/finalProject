@@ -29,7 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       MobileVerificationState.SHOW_MOBILE_FORM_STATE;
 
   final usernameController = TextEditingController();
-  //var locationController = TextEditingController();
+  final locationController = TextEditingController();
   final phonenumberController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
@@ -42,8 +42,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool showLoading = false;
 
   var phonemask = MaskTextInputFormatter(
-      mask: '+855##-###-####',
-      filter: {"#": RegExp(r'[+,0-9]')},
+      mask: '(+855)##-###-####',
+      filter: {"#": RegExp(r'[+,(),0-9]')},
       type: MaskAutoCompletionType.lazy);
 
   void signInWithPhoneAuthCredential(
@@ -61,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (authCredential.user != null) {
         var data = {
           'username': usernameController.text,
-          // 'location': locationController.text,
+          'city': locationController.text,
           'phone_number': phonenumberController.text,
           'password': passwordController.text,
           'password_confirmation': passwordConfirmController.text,
@@ -69,7 +69,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         var res = await CallApi().postData(data, 'register');
         var body = json.decode(res.body);
-        if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
+        print(body);
+        if (body['statusCode'] == 200) {
+          print("OKKKK");
           SharedPreferences localStorage =
               await SharedPreferences.getInstance();
           print("success");
@@ -116,6 +118,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
         prefixIcon: const Icon(Icons.account_circle),
         contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Username",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+    );
+
+    var locationField = TextFormField(
+      autofocus: false,
+      controller: locationController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Location cannot empty!");
+        } else {
+          return null;
+        }
+      },
+      onSaved: (value) {
+        locationController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.location_on),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Location",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -206,30 +233,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
         showLoading = true;
       });
       var data = {
-          'username': usernameController.text,
-          // 'location': locationController.text,
-          'phone_number': phonenumberController.text,
-          'password': passwordController.text,
-          'password_confirmation': passwordConfirmController.text,
-        };
+        'username': usernameController.text,
+        'city': locationController.text,
+        'phone_number': phonenumberController.text,
+        'password': passwordController.text,
+        'password_confirmation': passwordConfirmController.text,
+      };
 
-        var res = await CallApi().postData(data, 'register');
-        var body = json.decode(res.body);
-        if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
-          SharedPreferences localStorage =
-              await SharedPreferences.getInstance();
-          localStorage.setString('access_token', body['access_token'].toString());
-          localStorage.setString('user', json.encode(body['user']));
-          print(body['user']);
-         
-        } else {
-          print(" not success");
-        }
+      var res = await CallApi().postData(data, 'register');
+      var body = json.decode(res.body);
+      if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('access_token', body['access_token'].toString());
+        localStorage.setString('users', json.encode(body['users']));
+        print(body['users']);
+        print("Sucess0");
+      } else {
+        print(" not success");
+      }
 
-        setState(() {
-          showLoading = false;
-        });
-      
+      setState(() {
+        showLoading = false;
+      });
 
       await auth.verifyPhoneNumber(
         phoneNumber: phonenumberController.text,
@@ -254,27 +279,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
         },
         codeAutoRetrievalTimeout: (verificationId) async {},
       );
-
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => OTPScreen(
-      //               number: phonenumberController,
-      //             )));
     }
 
     return Stack(children: <Widget>[
-      Positioned(
-        child: ClipPath(
-          clipper: HeaderClipper(),
-          child: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              colors: [Color(0xff03a9f4), Color(0xff004ba0)],
-              begin: Alignment.centerRight,
-              end: Alignment(-1.0, -1.0),
-            )),
-          ),
+      ClipPath(
+        clipper: DrawClip1(),
+        child: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            colors: [Color(0xff03a9f4), Color(0xff004ba0)],
+            begin: Alignment.centerRight,
+            end: Alignment(-1.0, -1.0),
+          )),
+        ),
+      ),
+      ClipPath(
+        clipper: DrawClip(),
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [Color(0xff03a9f4), Color(0xff004ba0)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomLeft)),
         ),
       ),
       Center(
@@ -289,87 +315,81 @@ class _SignUpScreenState extends State<SignUpScreen> {
           )),
         ),
       ),
-      Positioned(
-        child: Center(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 250.0,
-                    ),
-                    userNameField,
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    // locationField,
-                    // const SizedBox(
-                    //   height: 20.0,
-                    // ),
-
-                    phonenumberField,
-
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    passwordField,
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    confirmpasswordField,
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        
-                          _registration();
-                       
-                      },
-                      child: Container(
-                        width: 350,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.blueAccent,
-                        ),
-                        child: Center(
-                          child: BigText(
-                            text: "Register",
-                            size: 24,
-                            color: Colors.white,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+      Center(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 250.0,
+                  ),
+                  userNameField,
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  locationField,
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  phonenumberField,
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  passwordField,
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  confirmpasswordField,
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _registration();
+                    },
+                    child: Container(
+                      width: 350,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.blueAccent,
+                      ),
+                      child: Center(
+                        child: BigText(
+                          text: "Register",
+                          size: 24,
+                          color: Colors.white,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    SignUpToLogin(
-                      account: "I have an account!",
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (ctx) => const LoginScreen()),
-                        );
-                      },
-                      name: "Login",
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  SignUpToLogin(
+                    account: "I have an account!",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (ctx) => const LoginScreen()),
+                      );
+                    },
+                    name: "Login",
+                  ),
+                ],
               ),
             ),
           ),
         ),
-      )
+      ),
     ]);
   }
 
@@ -388,8 +408,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     verificationId: verificationId,
                     smsCode: otpController.text);
             signInWithPhoneAuthCredential(phoneAuthCredential);
-            //   Navigator.push(
-            //       context, MaterialPageRoute(builder: (ctx) => MainScreen()));
           },
           child: const Text(
             "Verify",
@@ -426,7 +444,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (ctx) => SignUpScreen()));
                       },
                       child: Icon(
                         Icons.arrow_back,
@@ -514,47 +535,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
- // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       // key: _scaffoldKey,
-        body: passwordConfirmController == showLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
-                  ? getMobileFromWidget(context)
-                  : getOtpFromWidget(context),
-          
-        );
+      // key: _scaffoldKey,
+      body: passwordConfirmController == showLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : currentState == MobileVerificationState.SHOW_MOBILE_FORM_STATE
+              ? getMobileFromWidget(context)
+              : getOtpFromWidget(context),
+    );
   }
 }
 
-class HeaderClipper extends CustomClipper<Path> {
+class DrawClip1 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    final Path path = Path();
-    path.lineTo(0.0, size.height - 400);
-
-    var firstEndPoint = Offset(size.width * 0.5, size.height - 450.0);
-    var firstControlpoint = Offset(size.width * 0.25, size.height - 470.0);
-    path.quadraticBezierTo(firstControlpoint.dx, firstControlpoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
-
-    var secondEndPoint = Offset(size.width, size.height - 520.0);
-    var secondControlPoint = Offset(size.width * 0.75, size.height - 430);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
-
-    path.lineTo(size.width, 0.0);
-    path.close();
+    // TODO: implement getClip
+    Path path = Path();
+    path.addOval(
+        Rect.fromCircle(center: Offset(size.width, 50.0), radius: 150));
     return path;
   }
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return false;
+    // TODO: implement shouldReclip
+    return true;
+  }
+}
+
+class DrawClip extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    // TODO: implement getClip
+    Path path = Path();
+    path.addOval(
+        Rect.fromCircle(center: Offset(size.width * 0.3, 50.0), radius: 200));
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    // TODO: implement shouldReclip
+    return true;
   }
 }

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 class CallApi{
-    final String  _url =  'https://api-homesport.herokuapp.com/api/users/';
+    final String  _url =  'https://api-hs.herokuapp.com/api/users/';
      
     postData(data, apiUrl) async {
         var  fullUrl =   _url + apiUrl + await _getToken(); 

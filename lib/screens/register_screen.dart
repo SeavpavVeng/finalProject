@@ -59,14 +59,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           password: password,
           confirmpassword: confirmpassword);
       print(signUpBody.toString());
-      authController.registration(signUpBody).then((status) {
-        if (_formKey.currentState!.validate() && status.success) {
-          print("Success registration");
-        } else {
-          print("Error message");
-          // showCustomSnackBar(status.message);
-        }
-      });
+      // authController.registration(signUpBody).then((status) {
+      //   if (_formKey.currentState!.validate() && status.success) {
+      //     print("Success registration");
+      //   } else {
+      //     print("Error message");
+      //     // showCustomSnackBar(status.message);
+      //   }
+      // }
+      //);
     }
     // }
 

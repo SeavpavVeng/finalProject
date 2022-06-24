@@ -10,10 +10,10 @@ class AuthRepo extends GetxService{
 
   AuthRepo({required this.apiClient, required this.sharedPreferences});
 
-  Future<Response> registration(SignUpBody signUpBody) async {
-    return await apiClient.postData(
-        AppConstants.REGISTRATION_URI, signUpBody.toJson());
-  }
+  // Future<Response> registration(SignUpBody signUpBody) async {
+  //   // return await apiClient.postData(
+  //   //     AppConstants.REGISTRATION_URI, signUpBody.toJson());
+  // }
 
   // Future<Response> login(String phone, String password) async {
   //   return await apiClient.postData("https://shopsport/api/auth/login",

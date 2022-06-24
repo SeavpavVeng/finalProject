@@ -1,5 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sports_shopping_app/controllers/product_controller.dart';
 import 'package:sports_shopping_app/screens/favorite_screen.dart';
 import 'package:sports_shopping_app/screens/home_screen.dart';
 import 'package:sports_shopping_app/screens/profile_screen.dart';
@@ -19,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
  
   @override
   Widget build(BuildContext context) {
-    
+    //  Get.find<ProductController>().getProductList();
     return Scaffold(
       body: _pageOption[selectedIndex],
       bottomNavigationBar: ConvexAppBar(
