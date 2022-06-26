@@ -52,6 +52,10 @@ class CartHistory extends StatelessWidget {
                                         List.generate(itemPerOrder[1], (index) {
                                       return index <= 2
                                           ? Card(
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                                            ),
+                                            color: const Color.fromARGB(255, 223, 230, 243),
                                               child: Container(
                                                 height: 80,
                                                 width: 80,

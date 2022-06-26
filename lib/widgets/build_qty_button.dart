@@ -10,8 +10,8 @@ class BuildQTYButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 35,
-      height: 28,
+      width: 30,
+      height: 23,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
             padding: EdgeInsets.zero,

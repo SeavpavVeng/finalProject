@@ -21,8 +21,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ),
       body:Column(
         children: [
-          Container(
-            height: 380,
+          Expanded(
             child: ListView(  
               children: [    
                 Padding(
@@ -56,8 +55,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: BuildButtonBuy(name: 'Place Order',),
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            child: BuildButtonBuy(name: 'Place Order', sizeWidth: 300, sizeHeight: 50, onPressed: (){},),
           ),
       ]),
    );

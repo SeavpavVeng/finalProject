@@ -25,15 +25,22 @@ class _BuildCheckOutState extends State<BuildCheckOut> {
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
-            Container(
-              height: 130,
-              width: 135,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage("asset/images/category/T_shirts.png"),
-              )),
+            Card(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              color: const Color.fromARGB(255, 223, 230, 243),
+              child: Container(
+                height: 90,
+                width: 70,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage("asset/images/category/T_shirts.png"),
+                )),
+              ),
             ),
+            SizedBox(width: 15,),
             Container(
               height: 130,
               width: 250,
@@ -51,9 +58,9 @@ class _BuildCheckOutState extends State<BuildCheckOut> {
                       child: const Text(
                         "FC Barcelona",
                         style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 20,
                             color: Colors.blueAccent,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
@@ -65,12 +72,12 @@ class _BuildCheckOutState extends State<BuildCheckOut> {
                       children: [
                         Text(
                           "Size : ",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          style: TextStyle(fontSize: 16, color: Colors.blueAccent, fontWeight: FontWeight.w300),
                         ),
                         Text(
                           "M",
                           style:
-                              TextStyle(fontSize: 16, color: Colors.blueAccent),
+                              TextStyle(fontSize: 18, color: Colors.blueAccent),
                         )
                       ],
                     ),
@@ -81,12 +88,12 @@ class _BuildCheckOutState extends State<BuildCheckOut> {
                       children: [
                         Text(
                           "Qty : ",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          style: TextStyle(fontSize: 16, color: Colors.blueAccent, fontWeight: FontWeight.w300),
                         ),
                         Text(
                           "1",
                           style:
-                              TextStyle(fontSize: 16, color: Colors.blueAccent),
+                              TextStyle(fontSize: 18, color: Colors.blueAccent),
                         )
                       ],
                     ),
@@ -98,7 +105,7 @@ class _BuildCheckOutState extends State<BuildCheckOut> {
                     child: Text(
                       "\$${120}",
                       style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 24,
                           color: Colors.orange,
                           fontWeight: FontWeight.bold),
                     ),

@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 
 class BuildButtonBuy extends StatelessWidget {
   final String name;
-  BuildButtonBuy({required this.name});
+  final double sizeWidth;
+  final double sizeHeight;
+  VoidCallback onPressed;
+  BuildButtonBuy(
+      {required this.name, required this.sizeWidth, required this.sizeHeight, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: onPressed,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
       child: Center(
         child: Container(
-          height: 50,
-          width: 300,
+          height: sizeHeight,
+          width: sizeWidth,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
             gradient: LinearGradient(

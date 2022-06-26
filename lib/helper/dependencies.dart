@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sports_shopping_app/controllers/auth_controller.dart';
 import 'package:sports_shopping_app/controllers/product_controller.dart';
 import 'package:sports_shopping_app/controllers/recommended_product.dart';
 import 'package:sports_shopping_app/data/api/api_client.dart';
@@ -22,8 +21,7 @@ Future<void> init() async {
   Get.lazyPut(() => RecommendedProductRepo(apiClient: Get.find()));
   Get.lazyPut(() => ProductRepo(apiClient: Get.find()));
 
-  // Controller
-  Get.lazyPut(() => AuthController(authRepo: Get.find()));
+
   Get.lazyPut(
       () => RecommendedProductController(recommendedProductRepo: Get.find()));
   //Get.lazyPut(() => ProductController(productRepo: Get.find()));

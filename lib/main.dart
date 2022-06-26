@@ -2,9 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
-import 'package:sports_shopping_app/controllers/test_controller.dart';
+import 'package:sports_shopping_app/controllers/product_controller.dart';
+import 'package:sports_shopping_app/controllers/category_controller.dart';
+import 'package:sports_shopping_app/models/product_model.dart';
+import 'package:sports_shopping_app/screens/checkout_screen.dart';
+import 'package:sports_shopping_app/screens/detail_screen.dart';
+import 'package:sports_shopping_app/screens/history_product_screen.dart';
 import 'package:sports_shopping_app/screens/main_screens.dart';
-import 'helper/dependencies.dart' as dep;
+import 'package:sports_shopping_app/screens/shopping_cart_screen.dart';
 
 // void main() {
 //   runApp(const MyApp());
@@ -25,8 +30,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     LocalStorage storage = LocalStorage("token");
     return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (ctx) => TestController(),
-    )],
+        providers: [
+          ChangeNotifierProvider(create: (ctx) => CategoryController()),
+          ChangeNotifierProvider(create: (ctx) => ProductController()),
+    ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -47,7 +54,7 @@ class MyApp extends StatelessWidget {
           //   if (storage.getItem('token') == null) {
           //     return WelcomeScreen();
           //   }
-            return MainScreen();
+            return  MainScreen();
           
         },
       )

@@ -1,82 +1,40 @@
-// class Categories{
-//   int? _statusCode;
-//   String? _message;
-//   CategoryModel? _data;
-//   CategoryModel? get data => _data;
-
-//   Categories({required statusCode, required message, required data}) {
-//     _statusCode = statusCode;
-//     _message = message;
-//     _data = data;
-//   }
-  
-//   // factory Categories.fromJson(Map<String, dynamic> json) { 
-//   // final _data = [];
-//   //   json["data"].forEach((v) => _data.add(CategoryModel.fromJson(v)));
-//   //  return Categories(
-//   //    statusCode: json['statusCode'],
-//   //    message:json['message'],
-//   //    data: _data,
-//   //   //  [
-//   //   //    if (json['data'] != null) {
-//   //   //     _data = <CategoryModel>[],
-//   //   //   print(ata);
-//   //   //   json['data'].forEach((v) {
-//   //   //     _data.add(CategoryModel.fromJson(v));
-//   //   //   });
-//   //   // }
-//   //   //  ]
-   
-//   //   );
-//   // }
-
-//   Categories.fromJson(Map<String, dynamic> json) {
-//     _statusCode = json['statusCode'];
-//     _message = json['message'];
-//     if (json['data'] != null) {
-//       _data = CategoryModel?;
-//       print(_data);
-//       json['data'].forEach((v) {
-//         _data.add(CategoryModel.fromJson(v));
-//       });
-//     }
-//   }
-//  }
-
-// class CategoryModel {
-//   int? id;
-//   String? name;
-//   String? image;
-
-//   CategoryModel(
-//       {this.id, this.name, this.image});
-
-//   CategoryModel.fromJson(Map<String, dynamic> json) {
-//     id = json['id'] as int;
-//     name = json['name'] as String;
-//     image = json['image'] as String;
-    
-//   }
-
-//   // Map<String, dynamic> toJson() {
-//   //   final Map<String, dynamic> data = new Map<String, dynamic>();
-//   //   data['id'] = id;
-//   //   data['name'] = name;
-//   //   data['image'] = image;
-//   //   data['created_at'] = createdAt;
-//   //   data['updated_at'] = updatedAt;
-//   //   return data;
-//   // }
-// }
-
 class CategoryModel {
+  int? statusCode;
+  String? message;
+  List<Data>? data;
+
+  CategoryModel({this.statusCode, this.message, this.data});
+
+  CategoryModel.fromJson(Map<String, dynamic> json) {
+    statusCode = json['statusCode'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['statusCode'] = this.statusCode;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Data {
   int? id;
   String? name;
   String? image;
 
-  CategoryModel({this.id, this.name, this.image});
+  Data({this.id, this.name, this.image});
 
-  CategoryModel.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     image = json['image'];

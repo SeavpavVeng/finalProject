@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sports_shopping_app/models/category_product.dart';
 import 'package:sports_shopping_app/models/single_product.dart';
 
 List<SingleProduct> products = [
@@ -177,28 +176,5 @@ List<SingleProduct> Tshirt_products = [
     names: "Bayern Munich",
     prices: "30",
     images: "asset/images/category/T_shirts.png",
-  ),
-];
-
-List<CategoryProduct> category_products = [
-  CategoryProduct(
-    name: "Jersey",
-    image: "asset/images/category/T_shirts.png",
-  ),
-  CategoryProduct(
-    name: "Ball",
-    image: "asset/images/addias_ball_3.jpg",
-  ),
-  CategoryProduct(
-    name: "Boots",
-    image: "asset/images/category/boots.jpg",
-  ),
-  CategoryProduct(
-    name: "Gloves",
-    image: "asset/images/category/gloves.png",
-  ),
-  CategoryProduct(
-    name: "Socks",
-    image: "asset/images/category/socks.png",
   ),
 ];

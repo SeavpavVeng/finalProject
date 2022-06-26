@@ -16,20 +16,32 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140,
+      height: 130,
       width: double.infinity,
       child: Card(
+        shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
-              Container(
-                height: 130,
-                width: 135,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage("asset/images/category/T_shirts.png"),
-                )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  color: const Color.fromARGB(255, 223, 230, 243),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Container(
+                    height: 90,
+                    width: 70,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("asset/images/category/T_shirts.png"),
+                    )),
+                  ),
+                ),
               ),
               Container(
                 height: 120,
@@ -39,49 +51,39 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      
+                       Padding(
+                         padding: const EdgeInsets.only(top: 4, bottom: 16.0),
+                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: const Text(
+                                  "FC Barcelona",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.blueAccent,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),                     
+                            ],
+                          ),
+                       ),
+                      
                       Padding(
                         padding: const EdgeInsets.only(
-                          top: 4.0,
                           bottom: 2.0,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              child: const Text(
-                                "FC Barcelona",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.orange,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Spacer(),
-                            Container(
-                              child: IconButton(
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    size: 30,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () {}),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 4.0,
                         ),
                         child: Row(
                           children: [
                             Text(
                               "Size : ",
                               style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                                  TextStyle(fontSize: 16, color: Colors.blueAccent, fontWeight: FontWeight.w300),
                             ),
                          
                             Text("M",style:
-                                  TextStyle(fontSize: 20, color: Colors.blueAccent), )
+                                  TextStyle(fontSize: 18, color: Colors.blueAccent), )
                           ],
                         ),
                       ),
@@ -89,12 +91,12 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                              top: 4.0,
+                              top: 2.0,
                             ),
                             child: Text(
                               "\$${120}",
                               style: TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 24,
                                   color: Colors.orange,
                                   fontWeight: FontWeight.bold),
                             ),

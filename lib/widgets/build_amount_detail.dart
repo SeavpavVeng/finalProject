@@ -4,7 +4,7 @@ class BuildAmountDetail extends StatelessWidget {
   final String startName;
   final String endName;
 
-  BuildAmountDetail({required this.startName, required this.endName});
+  BuildAmountDetail({required this.startName, required this.endName, });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,6 @@ class BuildAmountDetail extends StatelessWidget {
             fontSize: 20,
             color: Colors.blueAccent,
             fontWeight: FontWeight.bold,
-
           ),
         ),
         Text(

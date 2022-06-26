@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:sports_shopping_app/models/product_model.dart';
+import 'package:sports_shopping_app/screens/list_product.dart';
 
-class CategoryCard extends StatelessWidget {
-  final String image;
-  final String name;
-  final VoidCallback onPressed;
+import '../models/category_model.dart';
 
-  CategoryCard(
-      {required this.image, required this.name, required this.onPressed});
+class CategoryCard extends StatefulWidget {
+  Data data;
+
+  CategoryCard(this.data);
+
+  @override
+  State<CategoryCard> createState() => _CategoryCardState();
+}
+
+class _CategoryCardState extends State<CategoryCard> {
+  // CategoryCard(
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ListProduct(widget.data)),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
@@ -29,13 +42,13 @@ class CategoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                child: Image.asset(image),
+                child: Image.network(widget.data.image.toString()),
                 flex: 75,
               ),
               Expanded(
                   flex: 25,
                   child: Text(
-                    name,
+                    widget.data.name.toString(),
                     style: const TextStyle(
                         fontSize: 10, fontWeight: FontWeight.bold),
                   ))

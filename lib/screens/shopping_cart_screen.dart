@@ -16,26 +16,32 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cart Item"),
+      title: Text("Cart Item"),
+      actions: [
+       IconButton(onPressed: (){}, icon: Icon(Icons.history)),
+        IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
+      ],
       ),
       body:Column(
         children: [
-          Container(
-            height: 350,
-            child: ListView(  
-              children: [    
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      BuildSingleCart(),
-                      BuildSingleCart(),
-                      BuildSingleCart(),
-                      BuildSingleCart(),
-                    ],
+          Expanded(
+            
+            child: Center(
+              child: ListView(  
+                children: [    
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        BuildSingleCart(),
+                        BuildSingleCart(),
+                        BuildSingleCart(),
+                        BuildSingleCart(),
+                      ],
+                    ),
                   ),
-                ),
-              ]),
+                ]),
+            ),
             ),
             Container(
               child: Padding(
@@ -49,15 +55,18 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     const Divider(
                       color: Colors.black,
                   ),
-                    BuildAmountDetail(startName: "Total", endName: "\$ 245.0"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BuildAmountDetail(startName: "", endName: "\$ 245.0"),
+                        BuildButtonBuy(name: "Check Out", sizeHeight: 40, sizeWidth: 150, onPressed: (){},)
+                      ],
+                    ),
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: BuildButtonBuy(name: 'Check Out',),
-          ),
+        
       ]),
    );
   }
