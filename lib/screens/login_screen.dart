@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports_shopping_app/screens/main_screens.dart';
@@ -94,14 +95,16 @@ class _LoginScreenState extends State<LoginScreen> {
       };
 
       var res = await CallApi().postData(data, 'login');
+
       final body = json.decode(res.body);
       print(body);
       if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
         print("successful login");
+
         SharedPreferences localStorage = await SharedPreferences.getInstance();
         localStorage.setString('access_token', body['access_token'].toString());
-        localStorage.setString('user', json.encode(body['user']));
-        print(body['user']);
+        localStorage.setString('user', json.encode(body['data']));
+
         Navigator.push(
           context,
           MaterialPageRoute(

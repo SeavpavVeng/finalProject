@@ -50,37 +50,41 @@ class _HomeScreenState extends State<HomeScreen> {
                         fit: BoxFit.cover,
                       ))
                     ),
+                    // Container(
+                    //   child: Text("User", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.grey),),
+                    // ),
                     Center(
                       child: Container(
                         width: 45,
                         height: 45,
-                        child: Icon(Icons.search, color: Colors.white,),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          gradient: const LinearGradient(
-                              colors: [Color(0xff03a9f4), Color(0xff004ba0)],
-                              begin: Alignment.centerRight,
-                              end: Alignment(-1.0, -1.0),
-                          
-                          ),
-                        ),
+                        child: Icon(Icons.filter_list, color: Colors.white,),
+                        // decoration: BoxDecoration(
+                        //   borderRadius: BorderRadius.circular(15),
+                        //   gradient: const LinearGradient(
+                        //       colors: [Color(0xff03a9f4), Color(0xff004ba0)],
+                        //       begin: Alignment.centerRight,
+                        //       end: Alignment(-1.0, -1.0),
+                    
+                        //   ),
+                        // ),
                       ),
-                    ),          
+                    ),
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 10,),
             Container(
-              child: SliderContainer(),
+              child: const SliderContainer(),
             ),
             Container(
-              child: Category(),
+              child: Center(child:  Category()),
             ),
        
             
             Container(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 8.0, ),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, top: 8.0, ),
                 child: Text("Recommended for you", style: TextStyle(fontSize: 18, color: Colors.blueAccent),),
               ),
             ),

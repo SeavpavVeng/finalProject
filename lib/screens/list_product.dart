@@ -29,10 +29,10 @@ class _ListProductState extends State<ListProduct> {
   get appBar {
     return AppBar(
       centerTitle: true,
-      title: Text(widget.data.name.toString()),
+      title: Text(widget.data.name.toString() +"\t" +"Product", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
       actions: [
         // IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back)),
-        IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+        IconButton(onPressed: () {}, icon: Icon(Icons.filter_list)),
       ],
     );
   }

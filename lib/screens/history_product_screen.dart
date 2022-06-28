@@ -12,7 +12,7 @@ class CartHistory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cart History"),
+        title: Text("Cart History", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
         actions: [
           IconButton(
             onPressed: () {},

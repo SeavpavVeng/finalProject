@@ -143,7 +143,7 @@ class _RecommendationProductState extends State<RecommendationProduct>  with Sin
                       width: 160,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                        image: AssetImage(""),
+                        image: AssetImage("asset/images/category/T_shirts.png"),
                       )),
                     ),
                   ),

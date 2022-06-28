@@ -16,7 +16,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-      title: Text("Cart Item"),
+      title: Text("Cart", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
       actions: [
        IconButton(onPressed: (){}, icon: Icon(Icons.history)),
         IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
@@ -51,17 +51,17 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                 children: [
                   BuildAmountDetail(
                     startName: "Your Price", endName: "\$ 245.0"),
-                    BuildAmountDetail(startName: "Discount", endName: "\$ 0.0"),
+                  BuildAmountDetail(startName: "Discount", endName: "\$ 0.0"),
                     const Divider(
                       color: Colors.black,
                   ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BuildAmountDetail(startName: "", endName: "\$ 245.0"),
-                        BuildButtonBuy(name: "Check Out", sizeHeight: 40, sizeWidth: 150, onPressed: (){},)
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BuildAmountDetail(startName: "", endName: "\$ 245.0"),
+                      BuildButtonBuy(name: "Check Out", sizeHeight: 40, sizeWidth: 150, onPressed: (){},)
+                    ],
+                  ),
                 ],
               ),
             ),

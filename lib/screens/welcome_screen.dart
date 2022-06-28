@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:sports_shopping_app/screens/signup.dart';
 import 'package:sports_shopping_app/screens/signup_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {

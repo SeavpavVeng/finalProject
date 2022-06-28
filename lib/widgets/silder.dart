@@ -11,9 +11,9 @@ class SliderContainer extends StatefulWidget {
 
 class _SliderContainerState extends State<SliderContainer> {
   List imgList = [
-    "asset/images/pic_02.png",
-    "asset/images/pic_02.png",
-    "asset/images/pic_02.png",
+    "asset/images/slider2.jpg",
+    "asset/images/silder2.jpg",
+    "asset/images/silder2.jpg",
   ];
   int activeIndex = 0;
   @override
@@ -26,35 +26,52 @@ class _SliderContainerState extends State<SliderContainer> {
           child: CarouselSlider(
             items: imgList
                 .map(
-                  (item) => Container(
-                    child: Card(
-                      color: Colors.blue,
-                      shape: RoundedRectangleBorder(
+                  (item) =>  Container(
+                        child: Stack(
+                          children: [
+                            Card(
+                               shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            item,
-                            fit: BoxFit.cover,
-                            width: 1000,
-                          ),
-                        ],
+                              child: Image.asset(
+                                item,
+                                fit: BoxFit.fill,
+                                width: 1000,
+                                
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
+                  
+                  
                 )
                 .toList(),
             options: CarouselOptions(
-              onPageChanged: (index, reason){
-                setState(() {
-                   activeIndex = index;
-                });
-              },
-              autoPlay: true,
-              aspectRatio: 2.0,
-              enlargeCenterPage: true,
+            height: 400,
+      aspectRatio: 16/9,
+      viewportFraction: 0.8,
+      initialPage: 0,
+      enableInfiniteScroll: true,
+      reverse: false,
+      autoPlay: true,
+      autoPlayInterval: Duration(seconds: 3),
+      autoPlayAnimationDuration: Duration(milliseconds: 800),
+      autoPlayCurve: Curves.fastOutSlowIn,
+      enlargeCenterPage: true,
+   
+      scrollDirection: Axis.horizontal,
             ),
+            // CarouselOptions(
+            //   onPageChanged: (index, reason){
+            //     setState(() {
+            //        activeIndex = index;
+            //     });
+            //   },
+            //   autoPlay: true,
+            //   aspectRatio: 2.0,
+           
+            // ),
           ),
         ),
         Container(

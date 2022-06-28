@@ -59,34 +59,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
 
       if (authCredential.user != null) {
-        var data = {
-          'username': usernameController.text,
-          'city': locationController.text,
-          'phone_number': phonenumberController.text,
-          'password': passwordController.text,
-          'password_confirmation': passwordConfirmController.text,
-        };
 
-        var res = await CallApi().postData(data, 'register');
-        var body = json.decode(res.body);
-        print(body);
-        if (body['statusCode'] == 200) {
-          print("OKKKK");
-          SharedPreferences localStorage =
-              await SharedPreferences.getInstance();
-          print("success");
-          // localStorage.setString('token', body['token'].toString());
-          // localStorage.setString('users', json.encode(body['users']));
-          print(body['user']);
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MainScreen()));
-        } else {
-          print(" not success");
-        }
-
-        setState(() {
-          showLoading = false;
-        });
+              context, MaterialPageRoute(builder: (context) => const MainScreen()));
       }
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -245,8 +220,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
         localStorage.setString('access_token', body['access_token'].toString());
-        localStorage.setString('users', json.encode(body['users']));
-        print(body['users']);
+        localStorage.setString('user', json.encode(body['data']));
+        print(body['data']);
         print("Sucess0");
       } else {
         print(" not success");
@@ -296,7 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ClipPath(
         clipper: DrawClip(),
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
                   colors: [Color(0xff03a9f4), Color(0xff004ba0)],
                   begin: Alignment.topLeft,

@@ -7,9 +7,12 @@ import 'package:sports_shopping_app/controllers/category_controller.dart';
 import 'package:sports_shopping_app/models/product_model.dart';
 import 'package:sports_shopping_app/screens/checkout_screen.dart';
 import 'package:sports_shopping_app/screens/detail_screen.dart';
+import 'package:sports_shopping_app/screens/favorite_screen.dart';
 import 'package:sports_shopping_app/screens/history_product_screen.dart';
+import 'package:sports_shopping_app/screens/invoice_screen.dart';
 import 'package:sports_shopping_app/screens/main_screens.dart';
 import 'package:sports_shopping_app/screens/shopping_cart_screen.dart';
+import 'package:sports_shopping_app/screens/welcome_screen.dart';
 
 // void main() {
 //   runApp(const MyApp());
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
           //   if (storage.getItem('token') == null) {
           //     return WelcomeScreen();
           //   }
-            return  MainScreen();
+            return  WelcomeScreen();
           
         },
       )

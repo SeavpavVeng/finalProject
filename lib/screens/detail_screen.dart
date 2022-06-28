@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sports_shopping_app/data/data.dart';
 
 import 'package:sports_shopping_app/models/product_model.dart';
 import 'package:sports_shopping_app/models/category_model.dart';
+import 'package:sports_shopping_app/screens/shopping_cart_screen.dart';
 import 'package:sports_shopping_app/widgets/app_icon.dart';
 import 'package:sports_shopping_app/widgets/big_text.dart';
 import 'package:sports_shopping_app/widgets/build_button_buy.dart';
@@ -12,7 +14,6 @@ import 'package:sports_shopping_app/widgets/build_size_button.dart';
 import '../controllers/product_controller.dart';
 
 class DetailScreen extends StatefulWidget {
-
   ProductModel? productModel;
   DetailScreen(this.productModel);
 
@@ -20,10 +21,21 @@ class DetailScreen extends StatefulWidget {
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailScreenState extends State<DetailScreen>
+    with SingleTickerProviderStateMixin {
+  int quantity = 0;
+  int stock = 2;
+  double price = 0;
+  int addQuantity = 1;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     Provider.of<ProductController>(context)
         .getProduct(widget.productModel!.id!.toInt());
     final products = Provider.of<ProductController>(context)
@@ -35,6 +47,9 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   body(List<ProductModel>? products) {
+    setState(() {
+      price = double.parse(widget.productModel!.price.toString());
+    });
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -60,7 +75,8 @@ class _DetailScreenState extends State<DetailScreen> {
                         height: 280,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                          image: NetworkImage(widget.productModel!.image.toString()),
+                          image: NetworkImage(
+                              widget.productModel!.image.toString()),
                         )),
                       ),
                     ),
@@ -80,7 +96,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           sizeIcon: 20,
                           size: 40),
                       Container(
-                        child: Text(
+                        child: const Text(
                           "Product Detail",
                           style: TextStyle(
                               fontSize: 24,
@@ -140,7 +156,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   padding: EdgeInsets.only(right: 40),
                   child: BigText(
                     color: Colors.orange,
-                    text: widget.productModel!.price.toString(),
+                    text: price.toString(),
                     size: 30,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -276,7 +292,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               BuildQTYButton(
                                   icon: Icons.remove,
                                   iconColor: Colors.white,
-                                  onPressed: () {}),
+                                  onPressed: () {
+                                    double temp;
+                                  }),
                               const Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 4),
@@ -291,7 +309,17 @@ class _DetailScreenState extends State<DetailScreen> {
                               BuildQTYButton(
                                 icon: Icons.add,
                                 iconColor: Colors.white,
-                                onPressed: () {},
+                                onPressed: () {
+                                  // // int aa = addQuantity + 1;
+
+                                  // // double temp = price * aa;
+                                  // setState(() {
+                                  //   addQuantity = aa;
+                                  //   price = temp;
+                                  // });
+                               
+                
+                                },
                               )
                             ],
                           ),
@@ -327,7 +355,12 @@ class _DetailScreenState extends State<DetailScreen> {
                         name: "Add to Cart",
                         sizeHeight: 50,
                         sizeWidth: 300,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (ctx) => ShoppingCartScreen()));
+                        },
                       )),
                 ],
               )),

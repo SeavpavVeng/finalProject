@@ -80,6 +80,9 @@ flutter:
      - asset/images/logo_2.png
      - asset/images/category/
      - asset/images/success.gif
+     - asset/images/silder1.jpg
+     - asset/images/silder2.jpg
+     - asset/images/slider2.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
