@@ -102,7 +102,7 @@ class _RecommendationProductState extends State<RecommendationProduct>  with Sin
         child: GridView.builder(
           itemCount: category!.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            mainAxisSpacing: 10,
+            mainAxisSpacing: 2,
             childAspectRatio: 0.75,
             crossAxisCount: 2,
           ),

@@ -83,6 +83,7 @@ flutter:
      - asset/images/silder1.jpg
      - asset/images/silder2.jpg
      - asset/images/slider2.jpg
+     - asset/images/real_madrid_home.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

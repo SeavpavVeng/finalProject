@@ -6,6 +6,7 @@ import 'package:sports_shopping_app/widgets/category_card.dart';
 
 
 class Category extends StatefulWidget {
+   bool isLoading = true;
   @override
   State<Category> createState() => _CategoryState();
 }
@@ -18,11 +19,11 @@ class _CategoryState extends State<Category> with SingleTickerProviderStateMixin
     super.didChangeDependencies();
   }
 
-   @override
-  void didUpdateWidget(covariant Category oldWidget) {
-    Provider.of<CategoryController>(context).getCategory();
-    super.didUpdateWidget(oldWidget);
-  }
+  //  @override
+  // void didUpdateWidget(covariant Category oldWidget) {
+  //   Provider.of<CategoryController>(context).getCategory();
+  //   super.didUpdateWidget(oldWidget);
+  // }
 
   @override
   Widget build(BuildContext context) {

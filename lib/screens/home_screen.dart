@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               child: const Padding(
                 padding: EdgeInsets.only(left: 8.0, top: 8.0, ),
-                child: Text("Recommended for you", style: TextStyle(fontSize: 18, color: Colors.blueAccent),),
+                child: Text("Latest Product", style: TextStyle(fontSize: 18, color: Colors.blueAccent),),
               ),
             ),
             Container(

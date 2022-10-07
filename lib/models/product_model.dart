@@ -30,52 +30,72 @@ class Product {
 class ProductModel {
   int? id;
   int? categoryId;
-  String? name;
-  String? image;
   int? brandId;
   int? sizeId;
+  String? categoryName;
+  String? brandName;
+  String? sizeName;
+  String? name;
+  String? image;
   String? price;
-  String? desc;
-  String? createdAt;
-  String? updatedAt;
+  int? quantity;
+  String? discount;
+  String? description;
+  bool? isCart;
+  bool? isFavorite;
 
   ProductModel(
       {this.id,
       this.categoryId,
-      this.name,
-      this.image,
       this.brandId,
       this.sizeId,
+      this.categoryName,
+      this.brandName,
+      this.sizeName,
+      this.name,
+      this.image,
       this.price,
-      this.desc,
-      this.createdAt,
-      this.updatedAt});
+      this.quantity,
+      this.discount,
+      this.description,
+      this.isCart,
+      this.isFavorite});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryId = json['category_id'];
-    name = json['name'];
-    image = json['image'];
     brandId = json['brand_id'];
     sizeId = json['size_id'];
+    categoryName = json['category_name'];
+    brandName = json['brand_name'];
+    sizeName = json['size_name'];
+    name = json['name'];
+    image = json['image'];
     price = json['price'];
-    desc = json['desc'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    quantity = json['quantity'];
+    discount = json['discount'];
+    description = json['description'];
+    isCart = json['isCart'];
+    isFavorite = json['isFavorite'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['category_id'] = this.categoryId;
-    data['name'] = this.name;
-    data['image'] = this.image;
     data['brand_id'] = this.brandId;
     data['size_id'] = this.sizeId;
+    data['category_name'] = this.categoryName;
+    data['brand_name'] = this.brandName;
+    data['size_name'] = this.sizeName;
+    data['name'] = this.name;
+    data['image'] = this.image;
     data['price'] = this.price;
-    data['desc'] = this.desc;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['quantity'] = this.quantity;
+    data['discount'] = this.discount;
+    data['description'] = this.description;
+    data['isCart'] = this.isCart;
+    data['isFavorite'] = this.isFavorite;
     return data;
   }
 }

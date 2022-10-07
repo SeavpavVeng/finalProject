@@ -59,9 +59,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
 
       if (authCredential.user != null) {
-
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const MainScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MainScreen()));
       }
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -219,10 +218,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       var body = json.decode(res.body);
       if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.setString('access_token', body['access_token'].toString());
+        localStorage.setString('access_token', body['token']);
         localStorage.setString('user', json.encode(body['data']));
-        print(body['data']);
-        print("Sucess0");
+        print(localStorage.getString('access_token'));
+        print("Sucess");
       } else {
         print(" not success");
       }
@@ -351,11 +350,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SignUpToLogin(
                     account: "I have an account!",
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (ctx) => const LoginScreen()),
-                      );
+                      Navigator.pop(context);
                     },
                     name: "Login",
                   ),

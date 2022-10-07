@@ -7,7 +7,6 @@ import '../controllers/product_controller.dart';
 import '../models/category_model.dart';
 
 class SingleProductWidget extends StatefulWidget {
-  
   ProductModel? productModel;
   SingleProductWidget(this.productModel);
 
@@ -19,16 +18,18 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
   // final String name;
   @override
   Widget build(BuildContext context) {
-
-    Provider.of<ProductController>(context).getProduct(widget.productModel!.categoryId!.toInt());
-    final products = Provider.of<ProductController>(context).productList(widget.productModel!.categoryId!.toInt());
+    Provider.of<ProductController>(context)
+        .getProduct(widget.productModel!.categoryId!.toInt());
+    final products = Provider.of<ProductController>(context)
+        .productList(widget.productModel!.categoryId!.toInt());
 
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
-        MaterialPageRoute(builder: (context) => DetailScreen(widget.productModel)),
-  );
+          MaterialPageRoute(
+              builder: (context) => DetailScreen(widget.productModel)),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
@@ -55,7 +56,8 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
                       width: 160,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                        image: NetworkImage(widget.productModel!.image.toString()),
+                        image:
+                            NetworkImage(widget.productModel!.image.toString()),
                       )),
                     ),
                   ),
@@ -85,9 +87,17 @@ class _SingleProductWidgetState extends State<SingleProductWidget> {
                           ),
                         ],
                       ),
-                      const Icon(
-                        Icons.favorite,
-                        color: Colors.orange,
+                      GestureDetector(
+                        onTap: () {
+                          print(widget.productModel!.id!.toInt());
+                          Provider.of<ProductController>(context, listen: false)
+                              .addlike(widget.productModel!.id!.toInt());
+                        },
+                        child: widget.productModel!.isFavorite == false ? Icon(Icons.favorite_border, color: Colors.grey, size: 27,):Icon(Icons.favorite, color: Colors.red, size: 27,),
+                        // child: Icon(
+                        //   Icons.favorite,
+                        //   color: Colors.orange,
+                        // ),
                       ),
                     ],
                   ),

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:sports_shopping_app/screens/invoice_screen.dart';
 import 'package:sports_shopping_app/widgets/build_qty_button.dart';
 import 'package:sports_shopping_app/widgets/drop_button_widget.dart';
 
 class BuildSingleCart extends StatefulWidget {
   BuildSingleCart({Key? key}) : super(key: key);
 
-
   @override
   State<BuildSingleCart> createState() => _BuildSingleCartState();
 }
 
 class _BuildSingleCartState extends State<BuildSingleCart> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,8 +18,8 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
       width: double.infinity,
       child: Card(
         shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
@@ -38,7 +36,8 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                     decoration: const BoxDecoration(
                         image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: AssetImage("asset/images/category/T_shirts.png"),
+                      image: AssetImage(
+                          "asset/images/real_madrid_home.png"),
                     )),
                   ),
                 ),
@@ -51,25 +50,23 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      
-                       Padding(
-                         padding: const EdgeInsets.only(top: 4, bottom: 16.0),
-                         child: Row(
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4, bottom: 16.0),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child: const Text(
-                                  "FC Barcelona",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),                     
-                            ],
-                          ),
-                       ),
-                      
+                          children: [
+                            Container(
+                              child: const Text(
+                                "Real Madrid",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(
                           bottom: 2.0,
@@ -78,12 +75,16 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                           children: [
                             Text(
                               "Size : ",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.blueAccent, fontWeight: FontWeight.w300),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.blueAccent,
+                                  fontWeight: FontWeight.w300),
                             ),
-                         
-                            Text("M",style:
-                                  TextStyle(fontSize: 18, color: Colors.blueAccent), )
+                            Text(
+                              "M",
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.blueAccent),
+                            )
                           ],
                         ),
                       ),
@@ -94,7 +95,7 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                               top: 2.0,
                             ),
                             child: Text(
-                              "\$${120}",
+                              "\$${16.0}",
                               style: TextStyle(
                                   fontSize: 24,
                                   color: Colors.orange,
@@ -112,7 +113,7 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 2),
                                 child: Text(
-                                  "01",
+                                  "1",
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -122,7 +123,12 @@ class _BuildSingleCartState extends State<BuildSingleCart> {
                               BuildQTYButton(
                                 icon: Icons.add,
                                 iconColor: Colors.white,
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (ctx) => InvoiceScreen()));
+                                },
                               )
                             ],
                           ),

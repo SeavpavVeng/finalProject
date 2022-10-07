@@ -4,6 +4,7 @@ import 'package:localstorage/localstorage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sports_shopping_app/screens/main_screens.dart';
+import 'package:sports_shopping_app/screens/signup_screen.dart';
 import 'package:sports_shopping_app/widgets/signup_to_login.dart';
 import '../data/api/api.dart';
 
@@ -97,18 +98,18 @@ class _LoginScreenState extends State<LoginScreen> {
       var res = await CallApi().postData(data, 'login');
 
       final body = json.decode(res.body);
-      print(body);
+   
       if (_formKey.currentState!.validate() && body['statusCode'] == 200) {
         print("successful login");
 
         SharedPreferences localStorage = await SharedPreferences.getInstance();
         localStorage.setString('access_token', body['access_token'].toString());
         localStorage.setString('user', json.encode(body['data']));
-
+        print(localStorage.getString('access_token'));
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainScreen()));
+            builder: (context) => MainScreen()));
       } else {
         //  showCustomSnackBar("Fail sucees",  "login again");
         //SnackBarPage;
@@ -208,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SignUpToLogin(
                         account: "I don't have an account!",
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (ctx)=> SignUpScreen()));
                         },
                         name: "sign up",
                       ),

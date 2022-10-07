@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:sports_shopping_app/screens/login_screen.dart';
 import 'package:sports_shopping_app/screens/signup_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   MainRoute() {
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
   final controller = PageController(viewportFraction: 1, keepPage: true);
 

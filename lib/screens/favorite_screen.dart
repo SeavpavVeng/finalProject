@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sports_shopping_app/controllers/product_controller.dart';
 import 'package:sports_shopping_app/data/data.dart';
 import 'package:sports_shopping_app/widgets/brend_type.dart';
 
@@ -9,9 +11,11 @@ class FavoiteScreen extends StatefulWidget {
   State<FavoiteScreen> createState() => _FavoiteScreenState();
 }
 
-class _FavoiteScreenState extends State<FavoiteScreen> {
+class _FavoiteScreenState extends State<FavoiteScreen> with SingleTickerProviderStateMixin{
+
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold (
       appBar: AppBar(
         centerTitle: true,

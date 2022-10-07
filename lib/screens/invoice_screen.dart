@@ -88,7 +88,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                           SizedBox(
                             width: 10,
                           ),
-                          Text("Seavpav",
+                          Text("Dara",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w300,
@@ -170,7 +170,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                         width: 10,
                       ),
                       Text(
-                        "\$${200}",
+                        "\$${16.0}",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w300,
@@ -186,14 +186,14 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text(
-                        "Qty",
+                        "Discount",
                         style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       Text(
-                        "1",
+                        "%"+"0.0",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w300,
@@ -219,7 +219,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                         width: 10,
                       ),
                       Text(
-                        "\$${200}",
+                        "\$${16.0}",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

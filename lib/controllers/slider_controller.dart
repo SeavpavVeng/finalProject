@@ -1,52 +1,47 @@
+
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:localstorage/localstorage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/category_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sports_shopping_app/models/slider_model.dart';
 
-class CategoryController with ChangeNotifier {
-  List<Data>? _categoryList = [];
+class SliderController with ChangeNotifier{
+  List<SliderModel>? _sliderList = [];
 
-  Future<bool> getCategory() async {
+  Future<bool> getSlider() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
     var token = localStorage.getString('access_token');
-  
 
     http.Response response = await http.get(
-        Uri.parse("https://api-hs.herokuapp.com" + "/api/category"),
+        Uri.parse("https://api-hs.herokuapp.com" + "/api/slider"),
         headers: {'Authorization': 'Bearer $token'});
 
     try {
-
-      var categoryData;
+      var sliderData;
       if (response.statusCode == 200) {
         Map<String, dynamic> body = json.decode(response.body);
-        CategoryModel categoryModel = CategoryModel.fromJson(body);
-        categoryData = categoryModel.data;
-       
+        Slider sliderModel = Slider.fromJson(body);
+        sliderData = sliderModel.data;
       } else {
-     
         notifyListeners();
         return true;
       }
-      _categoryList = categoryData;
-  
+      _sliderList = sliderData;
+
       notifyListeners();
       return true;
     } catch (e) {
-      print("e getCategory");
+      print("e getSlider");
       print(e);
       return false;
     }
   }
 
-  List<Data> get categoryAll {
-    if (_categoryList != null) {
-      return [...?_categoryList];
+  List<SliderModel> get sliderAll {
+    if (_sliderList != null) {
+      return [...?_sliderList];
     }
     return [];
   }
